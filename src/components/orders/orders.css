@@ -1,0 +1,131 @@
+.orders-container {
+    display: flex;
+    flex-wrap: wrap;
+    border: none;
+}
+
+.order-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    width: 97%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Добавляем тень */
+}
+
+.order-card button.pay-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #28a745; /* Зеленый цвет */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.order-card button.pay-btn:hover {
+    background-color: #218838; /* Темнее зеленый цвет при наведении */
+}
+
+.order-card button.comment-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff; /* Синий цвет */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.order-card button.comment-btn:hover {
+    background-color: #0056b3; /* Темнее синий цвет при наведении */
+}
+
+.cancel-btn {
+    background-color: #f44336; /* Red */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-btn:hover {
+    background-color: #d32f2f; /* Darker red */
+}
+
+
+
+.order-details {
+    list-style-type: none;
+    padding: 0;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px; /* Закругляем углы */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Добавляем тень */
+}
+
+.modal-content button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+    background-color: #0056b3;
+}
+
+.modal-content textarea {
+    width: 95%;
+    height: 100px;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    resize: none; /* Отключаем изменение размера */
+    font-size: 16px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal-content textarea:focus {
+    border-color: #007bff;
+    box-shadow: inset 0 2px 4px rgba(0, 123, 255, 0.3);
+    outline: none; /* Убираем стандартный outline */
+}
+
+
+
+.star-rating {
+    font-size: 24px;
+}
+
+.star {
+    cursor: pointer;
+}
+
+.star.active {
+    color: gold;
+}

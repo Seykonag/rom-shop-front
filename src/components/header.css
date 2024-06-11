@@ -1,0 +1,185 @@
+/* Header.css */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 98%;
+  z-index: 1000;
+  background-color: #f0f0f0;
+  color: #333;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 1.5em;
+}
+
+.avatar-container, .search-container {
+  display: flex;
+  align-items: center;
+}
+
+.avatar, .search-input, .search-button {
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  color: #333;
+}
+
+.avatar, .search-input {
+  background-color: #fff;
+  font-size: 16px;
+}
+
+.avatar {
+  background-color: transparent;
+  width: auto;
+  height: 95px;
+}
+
+.search-input {
+  margin-right: 5px;
+}
+
+.search-button {
+  background-color: #007bff;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.nav-links li a {
+  color: #333;
+  text-decoration: none;
+}
+
+.nav-links li a:hover {
+  text-decoration: underline;
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input-container {
+  position: relative;
+}
+
+.search-input {
+  padding-right: 30px;
+  width: 1000px;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* Category dropdown styles */
+.category-container {
+  position: relative;
+  margin-right: 0;
+}
+
+.category-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.category-button:hover {
+  color: #007bff;
+}
+
+.category-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.category-list li {
+  list-style: none;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.category-list li:hover {
+  background-color: #f0f0f0;
+}
+
+/* User dropdown styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: transparent; /* Прозрачный фон */
+  color: #333; /* Цвет текста */
+  padding: 8px 16px; /* Поля кнопки */
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-top: -4px; /* Приподнимаем кнопку */
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 5px;
+  right: 0;
+}
+
+.dropdown-content a, .dropdown-content button {
+  color: black;
+  padding: 10px 15px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover, .dropdown-content button:hover {
+  background-color: #e5e5e5;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  color: #007bff; /* Цвет текста при наведении */
+}

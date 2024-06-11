@@ -1,0 +1,173 @@
+.product-container {
+    width: 75%;
+    margin: 0 auto;
+    border: 1px;
+}
+
+
+    .slick-slide { 
+        margin: 0 0px;
+    }
+
+    .slick-slide img { 
+        margin: 0 auto;
+    }
+
+.product-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    margin-top: 60px;
+    margin-right: 10px;
+    width: 150px;
+    height: 600px;
+}
+
+.product-price {
+     /* Устанавливаем желаемый размер шрифта */
+    font-weight: bold;
+    color: #b54848; /* Делаем текст жирным */
+}
+
+
+.link-style {
+    text-decoration: none; /* Убираем подчеркивание */
+    color: inherit; /* Сохраняем цвет текста по умолчанию */
+    background-color: transparent; /* Убираем фон */
+}
+
+.category-title {
+    font-size: 1.2em; /* Установите желаемый размер шрифта */
+    font-weight: bold; /* Делаем текст жирным, если нужно */
+    color: #333;
+    text-decoration: none; /* Установите желаемый цвет текста */
+}
+
+.product-sale-percentage {
+    font-size: 18px; /* Устанавливаем желаемый размер шрифта */
+    font-weight: bold;
+}
+
+
+.product-price.discounted {
+    text-decoration: line-through;
+    font-size: 1em; /* Устанавливаем размер шрифта для старой цены */
+    color: #888;
+    margin-bottom: 0;
+}
+
+
+.product-saleprice.counted {
+    text-decoration: none;
+    font-size: 18px; /* Устанавливаем желаемый размер шрифта */
+    font-weight: bold;
+    color: #b54848; /* Красный цвет для новой цены */
+    margin-left: 10px; /* Жирный шрифт для новой цены */
+    margin-top: 0;
+}
+
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+.product-image {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.product-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    white-space: normal; /* Разрешаем перенос строк */
+    word-break: break-word;
+}
+
+.product-details {
+    font-size: 14px;
+    overflow: hidden; /* Обрезаем текст, если он выходит за пределы блока */
+    text-overflow: ellipsis; /* Добавляем многоточие для обозначения обрезанного текста */
+    white-space: nowrap; /* Запрещаем перенос строк */
+}
+
+
+.product-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+}
+
+.product-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.product-actions button:hover {
+    background-color: #ddd;
+}
+
+.product-sale-percentage {
+    font-size: 1em; /* Устанавливаем размер шрифта для процента скидки */
+    font-weight: bold; /* Жирный шрифт */
+    color: green; /* Зеленый цвет для процента скидки */
+    margin-top: 5px; /* Отступ сверху */
+    background-color: #f0f0f0; /* Добавляем фон */
+    padding: 5px; /* Добавляем отступы внутри блока */
+    border-radius: 5px; /* Скругляем углы */
+}
+
+.product-image {
+    position: relative;
+}
+
+.product-discount-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.product-discount-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #b54848;
+}
+
+
+.product-image-container {
+    position: relative;
+}
+
+
+.product-discount-overlay {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    background-color: rgb(255, 0, 0);
+    padding: 0px 5px;
+    border-radius: 5px;
+}
+
+.product-discount-text {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}

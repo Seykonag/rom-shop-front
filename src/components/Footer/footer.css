@@ -1,0 +1,60 @@
+/* App.css */
+.footer {
+    background-color: #333; /* Темный фон */
+    color: #fff; /* Белый текст */
+    display: flex; /* Используем Flexbox для горизонтального выравнивания */
+    flex-wrap: wrap; /* Для адаптации на малых экранах */
+    padding: 20px;
+  }
+  
+  .footer-section {
+    flex: 1; /* Равномерное распределение ширины */
+    min-width: 200px; /* Минимальная ширина для каждой секции */
+    margin: 10px;
+  }
+  
+  .footer-section h3 {
+    border-bottom: 2px solid #555; /* Подчеркивание заголовка */
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
+  .footer-section ul {
+    list-style-type: none; /* Убираем маркеры списка */
+    padding: 0;
+  }
+  
+  .footer-section ul li {
+    margin-bottom: 10px;
+  }
+  
+  .footer-section ul li a {
+    color: #fff; /* Белый текст для ссылок */
+    text-decoration: none; /* Убираем подчеркивание */
+    transition: color 0.3s;
+  }
+  
+  .footer-section ul li a:hover {
+    color: #ffcc00; /* Цвет при наведении */
+  }
+  
+  .footer-contact {
+    flex: 2; /* Увеличиваем ширину для контактной информации */
+    min-width: 300px;
+    margin: 10px;
+  }
+  
+  .footer-contact p {
+    margin: 5px 0;
+  }
+  
+  .footer-copy {
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid #555; /* Линия сверху */
+    padding-top: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  

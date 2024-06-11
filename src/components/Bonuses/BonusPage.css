@@ -1,0 +1,40 @@
+/* BonusPage.css */
+.bonuses-page-container {
+    /* Добавляем стили для текста */
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left;
+}
+
+.start-text {
+    text-align: center;
+}
+
+.bonuses-page-container h1 {
+    /* Делаем заголовок центрированным */
+    text-align: center;
+}
+
+.bonuses-page-container h4 {
+    /* Делаем заголовки вопросов жирными */
+    font-weight: bold;
+}
+
+.bonuses-page-container p {
+    /* Делаем текст ответов тонким */
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.bonus-info {
+    /* Добавляем стили для надписи "Ваши бонусы" */
+    font-size: 36px; /* Увеличиваем размер */
+    font-weight: bold; /* Делаем жирным */
+    color: #b54848; /* Устанавливаем цвет */
+    margin-top: 20px; /* Добавляем отступ сверху */
+    text-align: center;
+}
+
+.bonuses-page-container ul {
+    list-style-type: none; /* Убираем маркеры (точки) */
+}

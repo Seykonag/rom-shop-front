@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../usercontext';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './RegistartionPage.css'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface Region {
-  name: string[];
-  cities: string[][];
-}
+    name: string[];
+    cities: string[][];
+  }
 
-const RegistrationPage: React.FC = () => {
-  const navigate = useNavigate()
-  const { setUsername } = useUser();
+const NewAdminPage = () => {
+    const navigate = useNavigate()
 
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
@@ -20,7 +15,7 @@ const RegistrationPage: React.FC = () => {
   const [firstNameError, setFirstNameError] = useState('')
   const [lastName, setLastName] = useState('')
   const [lastNameError, setLastNameError] = useState('')
-  const [username, setUsernameLocal] = useState('')
+  const [username, setUsername] = useState('')
   const [usernameError, setUsernameError] = useState('')
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState('')
@@ -223,42 +218,31 @@ const RegistrationPage: React.FC = () => {
           "newsletter": newsletter
         }
 
-        const res = await fetch('https://rom-shop-0c9c08d95305.herokuapp.com/auth/registration', {
+        alert(localStorage.getItem('Token'))
+
+        const res = await fetch('https://rom-shop-0c9c08d95305.herokuapp.com/admin/new/user-admin', {
           method: "POST",
           body: JSON.stringify(request_data),
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem('Token')
           }
         })
 
         if (res.ok) {
-          toast.success("Вы оформили товар, проверьте ваши заказы. Ожидайте одобрения заказа чтобы оплатить", {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
-          const json = await res.json()
+          alert('Вы создали нового админа')
+          const json = await res.text()
           console.log(json)
-          localStorage.setItem('Token', json.token)
-          setUsername(json.username)
-          setTimeout(() => {
-            navigate('/');
-        }, 3000);
-          
+          localStorage.setItem('Token', json)
         } else {
           alert('Произошла неизвестная ошибка')
-          navigate('/')
+          navigate('/registration')
         }
   }
 
   const handleRegionChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const region = e.target.value;
     setSelectedRegion(region);
-    // Сброс выбранного города при изменении выбранного региона
     setSelectedCity(null);
   };
 
@@ -295,7 +279,7 @@ const RegistrationPage: React.FC = () => {
   };
   
   const handleUsername = (e: any) => {
-    setUsernameLocal(e.target.value) 
+    setUsername(e.target.value) 
         const usernameRegex = /^[a-zA-Z][a-zA-Z0-9_]*$/
         if (e.target.value.length < 5) {
             setUsernameError('Логин не должен быть меньше 5 символов')
@@ -400,7 +384,7 @@ const RegistrationPage: React.FC = () => {
   };
   
   useEffect(() => {
-    document.title = 'Регистрация'
+    document.title = 'Новый админ'
     if (firstNameError || lastNameError || usernameError
       || emailError || phoneError || addressError
       || cityError || passwordError || matchingPasswordError) {
@@ -414,7 +398,6 @@ const RegistrationPage: React.FC = () => {
 
   return (
     <div>
-      <ToastContainer />
       <form>
         <h1>Регистрация</h1>
         {(firstNameError) && <div style={{color: 'red'}}>{firstNameError}</div>}
@@ -471,6 +454,6 @@ const RegistrationPage: React.FC = () => {
       </form>
     </div>
   );
-};
+}
 
-export default RegistrationPage;
+export default NewAdminPage
