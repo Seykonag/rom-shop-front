@@ -5,7 +5,6 @@ import HomePage from './components/home';
 import RegistrationPage from './components/auth/registration';
 import './App.css';
 import LogoutPage from './components/auth/logout';
-import NewAdminPage from './components/admin';
 import ProductPage from './components/products';
 import Header from './components/Header';
 import ProfilePage from './components/profle';
@@ -23,8 +22,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* Рендерим хедер и футер только если showHeaderFooter равен true */}
-      {showHeaderFooter && <Header />}
+        {showHeaderFooter && <Header />}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
