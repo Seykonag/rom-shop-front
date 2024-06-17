@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '../home/HomePage.css'
+import './categoryStyle.css'
 
 interface Product {
   id: number;
@@ -27,6 +27,10 @@ const CategoryPage: React.FC = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
   const [products, setProducts] = useState<Product[]>([]);
   const [category, setCategory] = useState<Category | null>(null);
+  const [sortMethod, setSortMethod] = useState<string>('default');
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000000]);
+  const [minPrice, setMinPrice] = useState<string>('');
+  const [maxPrice, setMaxPrice] = useState<string>('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -158,13 +162,91 @@ const handleBuy = (productId: number) => {
   console.log(`Product with ID ${productId} added to cart`);
 };
 
+
+const sortProducts = (products: Product[], method: string) => {
+  switch (method) {
+    case 'priceAsc':
+      return [...products].sort((a, b) => (a.salePrice || a.price) - (b.salePrice || b.price));
+    case 'priceDesc':
+      return [...products].sort((a, b) => (b.salePrice || b.price) - (a.salePrice || a.price));
+    case 'titleAsc':
+      return [...products].sort((a, b) => a.title.localeCompare(b.title));
+    case 'titleDesc':
+      return [...products].sort((a, b) => b.title.localeCompare(a.title));
+    default:
+      return products;
+  }
+};
+
+const applyFilters = () => {
+  setPriceRange([Number(minPrice) || 0, Number(maxPrice) || 10000000]);
+};
+
+const resetFilters = () => {
+  setMinPrice('');
+  setMaxPrice('');
+  setPriceRange([0, 10000000]);
+};
+
+const filteredProducts = products.filter(product => {
+  const productPrice = product.salePrice || product.price;
+  return productPrice >= priceRange[0] && productPrice <= priceRange[1];
+});
+
+const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const value = e.target.value;
+  setMinPrice(value);
+};
+
+const handleMaxPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const value = e.target.value;
+  setMaxPrice(value);
+};
+
+const sortedProducts = sortProducts(filteredProducts, sortMethod);
+
+
   return (
     <div>
       <ToastContainer />
-      <h2>{category ? category.title : 'Loading...'}</h2>
-      <ul style={{ listStyleType: 'none', padding: 0 }}>
-        {products.map(product => (
-          <li key={product.id} className="product-card">
+      <h2 style={{color: "white"}}>{category ? category.title : 'Загрузка...'}</h2>
+      
+      <ul className='product-list' style={{ listStyleType: 'none', padding: 0 }}>
+      <div className="util">
+      <div className="sort-container">
+        <label htmlFor="sort">Сортировка: </label>
+        <select id="sort" value={sortMethod} onChange={(e) => setSortMethod(e.target.value)}>
+          <option value="default">По умолчанию</option>
+          <option value="priceAsc">Сначала дешевле</option>
+          <option value="priceDesc">Сначала дороже</option>
+          <option value="titleAsc">От А до Я</option>
+          <option value="titleDesc">От Я до А</option>
+        </select>
+      </div>
+      <div className="filter-container">
+        <label>Фильтр по цене:</label>
+        <div>
+        <input
+          type="number"
+          value={minPrice}
+          onChange={handleMinPriceChange}
+          placeholder="От"
+        />
+        <input
+          type="number"
+          value={maxPrice}
+          onChange={handleMaxPriceChange}
+          placeholder="До"
+        />
+        </div>
+        <button className='comment-btn' onClick={applyFilters}>Применить фильтр</button>
+      <button className='comment-btn' onClick={resetFilters}>Сбросить фильтр</button>
+      </div>
+      
+      </div>
+      
+        {sortedProducts.map(product => (
+          <li key={product.id} className="product-card" style={{width: "250px"}}>
           <Link to={`/product/${product.id}`} className='link-style'>
           <div className="product-image-container">
 <img src={`data:image/jpeg;base64,${product.photo}`} alt={product.title} className="product-image"/>

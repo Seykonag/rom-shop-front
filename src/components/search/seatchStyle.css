@@ -1,0 +1,80 @@
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Расстояние между карточками */
+    justify-content: flex-start; /* Выравнивание по левому краю */
+    padding: 0;
+    list-style-type: none;
+    background-color: white;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8px;
+  }
+
+.util {
+  background-color: #EDF6FC;
+  border-radius: 15px;
+}
+
+  .filter-container {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  button.comment-btn {
+    margin-top: 10px;
+    margin-right: 7px;
+    padding: 10px 20px;
+    background-color: #007bff; /* Синий цвет */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+button.comment-btn:hover {
+  background-color: #0056b3; /* Темнее синий цвет при наведении */
+}
+  
+  .filter-container label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .filter-container input[type="number"] {
+    width: 48%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .filter-container input[type="number"]:last-child {
+    margin-right: 0;
+  }
+  
+  .horizontal-slider {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+.sort-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sort-container label {
+    margin-right: 10px;
+    margin-left: 15px;
+  }
+  
+  .sort-container select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  

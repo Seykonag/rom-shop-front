@@ -232,7 +232,7 @@ const RegistrationPage: React.FC = () => {
         })
 
         if (res.ok) {
-          toast.success("Вы оформили товар, проверьте ваши заказы. Ожидайте одобрения заказа чтобы оплатить", {
+          toast.success("Вы зарегестрировались", {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -250,8 +250,15 @@ const RegistrationPage: React.FC = () => {
         }, 3000);
           
         } else {
-          alert('Произошла неизвестная ошибка')
-          navigate('/')
+          toast.error("Пользователь с таким ником или email уже существует", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
         }
   }
 
@@ -400,6 +407,10 @@ const RegistrationPage: React.FC = () => {
   };
   
   useEffect(() => {
+    if (localStorage.getItem('Token') !== null) {
+      navigate("/")
+    }
+
     document.title = 'Регистрация'
     if (firstNameError || lastNameError || usernameError
       || emailError || phoneError || addressError
@@ -412,65 +423,197 @@ const RegistrationPage: React.FC = () => {
     emailError, phoneError, addressError,
     cityError, passwordError, matchingPasswordError])
 
-  return (
-    <div>
-      <ToastContainer />
-      <form>
-        <h1>Регистрация</h1>
-        {(firstNameError) && <div style={{color: 'red'}}>{firstNameError}</div>}
-        <input onChange={e => handlerFirstName(e)} type="text" value={firstName}
-        name='firstName' placeholder='Ваше имя*' style={{ borderColor: 'red' }} /> <br />
-        {(lastNameError) && <div style={{color: 'red'}}>{lastNameError}</div>}
-        <input onChange={e => handleLastName(e)} type="text" value={lastName} 
-        name='lastName' placeholder='Ваша фамилия*' style={{ borderColor: 'red' }} /> <br />
-        {(usernameError) && <div style={{color: 'red'}}>{usernameError}</div>}
-        <input onChange={e => handleUsername(e)} type="text" value={username} 
-        name='username' placeholder='Ваш логин*' style={{ borderColor: 'red' }} /> <br />
-        {(emailError) && <div style={{color: 'red'}}>{emailError}</div>}
-        <input onChange={e => handleEmail(e)} type="text" value={email} 
-        name='email' placeholder='Ваш email*' style={{ borderColor: 'red' }} /> <br />
-        {(phoneError) && <div style={{color: 'red'}}>{phoneError}</div>}
-        <input onChange={e => handlePhone(e)} type="text" value={phone} 
-        name='phone' placeholder='Ваш номер*' style={{ borderColor: 'red' }} /> <br />
-        <input onChange={e => handleFax(e)} type="text" value={fax} 
-        name='fax' placeholder='Ваш факс*' /> <br />
-        <input onChange={e => handleCompany(e)} type="text" value={company} 
-        name='company' placeholder='Ваша компания*' /> <br />
-        <label>
-          <select value={selectedRegion || ''} onChange={handleRegionChange}>
-            <option value="">Выберите страну</option>
-            {regions.map(region => (
-              <option key={region.name[0]} value={region.name[0]}>{region.name[1]}</option>
-            ))}
-          </select>
-        </label> <br />
-        <label>
-          <select value={selectedCity || ''} onChange={handleCityChange} disabled={!selectedRegion}>
-            <option value="">Выберите область/регион  </option>
-            {regions.find(region => region.name[0] === selectedRegion)?.cities.map(city => (
-              <option key={city[0]} value={city[0]}>{city[1]}</option>
-            ))}
-          </select>
-        </label> <br />
-        {(cityError) && <div style={{color: 'red'}}>{cityError}</div>}
-        <input onChange={e => handleCity(e)} type="text" value={city}
-        name='city' placeholder='Ваш город*' style={{ borderColor: 'red' }} /> <br />
-        {(addressError) && <div style={{color: 'red'}}>{addressError}</div>}
-        <input onChange={e => handleAddress(e)} type="text" value={address}
-        name='address' placeholder='Ваш адрес*' style={{ borderColor: 'red' }} /> <br />
-        <input onChange={e => handleIndex(e)} type="text" value={index}
-        name='index' placeholder='Ваш индекс*' /> <br />
-        {(passwordError) && <div style={{color: 'red'}}>{passwordError}</div>}
-        <input onChange={e => handlePassword(e)} type="password" value={password}
-        name='password' placeholder='Ваш пароль*' style={{ borderColor: 'red' }} /> <br />
-        {(matchingPasswordError) && <div style={{color: 'red'}}>{matchingPasswordError}</div>}
-        <input onChange={e => handleMatchingPassword(e)} type="password" value={matchingPassword}
-        name='matchingPassword' placeholder='Подтверждение пароля*' style={{ borderColor: 'red' }} /> <br />
-        Рассылка: <input checked={newsletter} onChange={e => setNewsletter(e.target.checked)}  type="checkbox" name='newsletter'/> <br />
-        <button disabled={!formValid} onClick={e => {e.preventDefault(); handle() }} type='submit'>Зарегистрироваться</button>
-      </form>
-    </div>
-  );
+    return (
+      <div className="form-container">
+        <ToastContainer />
+        <form className="registration-form">
+          <h1>Регистрация</h1>
+          
+          {firstNameError && <div className="error-message">{firstNameError}</div>}
+          <input 
+            className={`input-field ${firstNameError ? 'input-error' : ''}`} 
+            onChange={e => handlerFirstName(e)} 
+            type="text" 
+            value={firstName}
+            name="firstName" 
+            placeholder="Ваше имя*"
+            required 
+          /> 
+          <br />
+  
+          {lastNameError && <div className="error-message">{lastNameError}</div>}
+          <input 
+            className={`input-field ${lastNameError ? 'input-error' : ''}`} 
+            onChange={e => handleLastName(e)} 
+            type="text" 
+            value={lastName}
+            name="lastName" 
+            placeholder="Ваша фамилия*"
+            required
+          /> 
+          <br />
+  
+          {usernameError && <div className="error-message">{usernameError}</div>}
+          <input 
+            className={`input-field ${usernameError ? 'input-error' : ''}`} 
+            onChange={e => handleUsername(e)} 
+            type="text" 
+            value={username}
+            name="username" 
+            placeholder="Ваш логин*"
+            required
+          /> 
+          <br />
+  
+          {emailError && <div className="error-message">{emailError}</div>}
+          <input 
+            className={`input-field ${emailError ? 'input-error' : ''}`} 
+            onChange={e => handleEmail(e)} 
+            type="text" 
+            value={email}
+            name="email" 
+            placeholder="Ваш email*"
+            required 
+          /> 
+          <br />
+  
+          {phoneError && <div className="error-message">{phoneError}</div>}
+          <input 
+            className={`input-field ${phoneError ? 'input-error' : ''}`} 
+            onChange={e => handlePhone(e)} 
+            type="text" 
+            value={phone}
+            name="phone" 
+            placeholder="Ваш номер*"
+            required 
+          /> 
+          <br />
+  
+          <input 
+            className="input-field" 
+            onChange={e => handleFax(e)} 
+            type="text" 
+            value={fax}
+            name="fax" 
+            placeholder="Ваш факс" 
+          /> 
+          <br />
+  
+          <input 
+            className="input-field" 
+            onChange={e => handleCompany(e)} 
+            type="text" 
+            value={company}
+            name="company" 
+            placeholder="Ваша компания" 
+          /> 
+          <br />
+  
+          <label>
+            <select 
+              className="select-field"
+              value={selectedRegion || ''} 
+              onChange={handleRegionChange}
+            >
+              <option value="">Выберите страну</option>
+              {regions.map(region => (
+                <option key={region.name[0]} value={region.name[0]}>
+                  {region.name[1]}
+                </option>
+              ))}
+            </select>
+          </label> 
+          <br />
+  
+          <label>
+            <select 
+              className="select-field"
+              value={selectedCity || ''} 
+              onChange={handleCityChange} 
+              disabled={!selectedRegion}
+            >
+              <option value="">Выберите область/регион</option>
+              {regions.find(region => region.name[0] === selectedRegion)?.cities.map(city => (
+                <option key={city[0]} value={city[0]}>
+                  {city[1]}
+                </option>
+              ))}
+            </select>
+          </label> 
+          <br />
+  
+          {cityError && <div className="error-message">{cityError}</div>}
+          <input 
+            className={`input-field ${cityError ? 'input-error' : ''}`} 
+            onChange={e => handleCity(e)} 
+            type="text" 
+            value={city}
+            name="city" 
+            placeholder="Ваш город*"
+            required 
+          /> 
+          <br />
+  
+          {addressError && <div className="error-message">{addressError}</div>}
+          <input 
+            className={`input-field ${addressError ? 'input-error' : ''}`} 
+            onChange={e => handleAddress(e)} 
+            type="text" 
+            value={address}
+            name="address" 
+            placeholder="Ваш адрес*"
+            required 
+          /> 
+          <br />
+  
+          <input 
+            className="input-field" 
+            onChange={e => handleIndex(e)} 
+            type="text" 
+            value={index}
+            name="index" 
+            placeholder="Ваш индекс" 
+          /> 
+          <br />
+  
+          {passwordError && <div className="error-message">{passwordError}</div>}
+          <input 
+            className={`input-field ${passwordError ? 'input-error' : ''}`} 
+            onChange={e => handlePassword(e)} 
+            type="password" 
+            value={password}
+            name="password" 
+            placeholder="Ваш пароль*"
+            required 
+          /> 
+          <br />
+  
+          {matchingPasswordError && <div className="error-message">{matchingPasswordError}</div>}
+          <input 
+            className={`input-field ${matchingPasswordError ? 'input-error' : ''}`} 
+            onChange={e => handleMatchingPassword(e)} 
+            type="password" 
+            value={matchingPassword}
+            name="matchingPassword" 
+            placeholder="Подтверждение пароля*"
+            required 
+          /> 
+          <br />
+  
+          <button 
+            className="submit-button" 
+            disabled={!formValid} 
+            onClick={e => {
+              e.preventDefault(); 
+              handle();
+            }} 
+            type="submit"
+          >
+            Зарегистрироваться
+          </button>
+        </form>
+      </div>
+    );
 };
 
 export default RegistrationPage;

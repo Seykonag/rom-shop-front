@@ -48,7 +48,7 @@ export async function fetchcategoryData(): Promise<Category[]> {
             });
     
             if (response.ok) {
-                window.location.href = 'http://localhost:3000/admin/categorys';
+                window.location.href = 'http://195.133.198.25:3000/admin/categorys';
               }
     
             return { data };

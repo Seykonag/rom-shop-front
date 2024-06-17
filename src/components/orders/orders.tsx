@@ -17,6 +17,7 @@ interface Order {
     username: string | null;
     created: string;
     updated: string;
+    address: string;
     sum: number;
     status: string;
     idProducts: number[] | null;
@@ -60,12 +61,41 @@ const StarRating: React.FC<{ rating: number; onChange: (rating: number) => void 
 const OrdersPage: React.FC = () => {
     const [orders, setOrders] = useState<Order[]>([]);
     const [showComments, setShowComments] = useState<boolean>(false);
+    const [showBonus, setShowBonus] = useState<boolean>(false);
+    const [bonusId, setBonusId] = useState<number | null>(null);
+    const [useBonus, setUseBonus] = useState<boolean>(false);
     const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
     const [rating, setRating] = useState<number | null>(null);
     const [commentText, setCommentText] = useState<string>('');
     const [productId, setProductId] = useState<number | null>(null);
+    const [isEditingAddress, setIsEditingAddress] = useState<boolean>(false);
+    const [editedAddress, setEditedAddress] = useState<string>('');
+    const [editingOrderId, setEditingOrderId] = useState<number | null>(null);
+    const [bonus, setBonus] = useState<number>(0);
+
+    async function handleGet() {
+        try {
+            const res = await fetch('https://rom-shop-0c9c08d95305.herokuapp.com/bonus', {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("Token")}`
+                }
+            });
+
+            if (res.ok) {
+                const json = await res.json();
+                setBonus(json); // Выводим объект JSON напрямую
+            } else {
+            }
+        } catch (error) {
+            
+        }
+    };
+
 
     useEffect(() => {
+        handleGet();
         const fetchOrders = async () => {
             try {
                 const response = await fetch('https://rom-shop-0c9c08d95305.herokuapp.com/order/myOrders', {
@@ -106,10 +136,25 @@ const OrdersPage: React.FC = () => {
         }
     };
 
-    const handlePay = async (orderId: number) => {
+    const handleCloseBonus = (order: Order) => {
+        setShowBonus(false);
+        setUseBonus(false);
+    }
+
+    const handleShowBonus = (order: Order) => {
+        setBonusId(order.id);
+        setShowBonus(true);
+    };
+    
+    const handleBonusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setUseBonus(true);
+    };
+
+    const handlePay = async (orderId: number | null ) => {
+        if (orderId === null) return;
+
         const data = {
-            idOrder: orderId,
-            currency: "RUB"
+            idOrder: orderId
         };
 
         console.log(data)
@@ -119,8 +164,7 @@ const OrdersPage: React.FC = () => {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('Token')}`
+                    'Content-Type': 'application/json'
                 }
             });
             if (response.ok) {
@@ -187,15 +231,54 @@ const OrdersPage: React.FC = () => {
         }
     }
 
+    const handleEditAddress = (order: Order) => {
+        setIsEditingAddress(true);
+        setEditedAddress(order.address);
+        setEditingOrderId(order.id);
+    };
+    
+    const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEditedAddress(e.target.value);
+    };
+    
+    const handleSaveAddress = async () => {
+        if (editingOrderId === null) return;
+
+        console.log(editedAddress)
+    
+        try {
+            const response = await fetch(`https://rom-shop-0c9c08d95305.herokuapp.com/order/editAddress/${editingOrderId}`, {
+                method: 'POST',
+                body: editedAddress,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('Token')}`
+                }
+            });
+    
+            if (response.ok) {
+                setIsEditingAddress(false);
+                setEditingOrderId(null);
+                window.location.reload();
+            } else {
+                console.error('Failed to update address:', response.status);
+            }
+        } catch (error) {
+            console.error('Error updating address:', error);
+        }
+    };
+    
+
     return (
         <div>
-            <h1>Список заказов</h1>
+            <h1 style={{color:"white"}}>Список заказов</h1>
             <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }} className='order-card'>
                 {orders.map(order => (
                     <div key={order.id} style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '10px', margin: '10px', width: '300px' }}>
                         <h2>Заказ #{order.id}</h2>
-                        <p>Дата создания: {new Date(order.created).toLocaleString()}</p>
+                        <p>Дата заказа: {new Date(order.updated).toLocaleString()}</p>
                         <p>Общая сумма: {order.sum}</p>
+                        <p>Адрес: {order.address}</p>
                         <p>Статус: {translateStatus(order.status)}</p>
                         <ul style={{ listStyleType: 'none', padding: 0 }}>
                             {order.details.map((detail, index) => (
@@ -216,8 +299,12 @@ const OrdersPage: React.FC = () => {
                                 </li>
                             ))}
                         </ul>
+                        {order.status !== 'CLOSED' && order.status !== 'CANCELED' && (
+                            <button className='comment-btn' onClick={() => handleEditAddress(order)} style={{marginRight: 10}}>Изменить адрес</button>
+                        )}
+
                         {order.status === 'APPROVED' && (
-                            <button className='pay-btn' onClick={() => handlePay(order.id)} style={{ marginTop: '10px' }}>
+                            <button className='pay-btn' onClick={() => handleShowBonus(order)} style={{ marginTop: '10px' }}>
                                 Оплатить
                             </button>
                         )}
@@ -227,9 +314,44 @@ const OrdersPage: React.FC = () => {
                         </button>
                         )}
 
+                        
+
                     </div>
                 ))}
             </div>
+            {showBonus && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>Хотите использовать бонусы для заказа #{bonusId}?</h2>
+                        {bonus !== 0 && (
+                            <input type="checkbox" />
+                        )}
+                        <h3>У вас {bonus !== 0 ? bonus.toLocaleString() : 'нет' } бонусов</h3>
+                        <h4>При оплате бонусами они спишутся, если бонусов достаточно то покупка обойдется бесплатно</h4>
+                        
+                        <button style={{backgroundColor:"#28a745"}} onClick={() => handlePay(bonusId)}>Оплатить</button>
+                        <button onClick={() => setShowBonus(false)} style={{"marginLeft": "10px"}}>Отмена</button>
+                    </div>
+                </div>
+            )}
+            {isEditingAddress && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>Изменить адрес для заказа #{editingOrderId}</h2>
+                        <input 
+                            type="text" 
+                            value={editedAddress} 
+                            onChange={handleAddressChange}
+                            placeholder="Введите новый адрес"
+                        />
+                        <div style={{marginTop: "15px"}}>
+                        <button onClick={handleSaveAddress}>Сохранить</button>
+                        <button onClick={() => setIsEditingAddress(false)} style={{"marginLeft": "10px"}}>Отмена</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {showComments && (
                 <div className="modal">
                     <div className="modal-content">

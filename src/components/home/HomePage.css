@@ -1,71 +1,89 @@
+body {
+    background-image: url('../../images/back.jpg');
+}
+
 .product-container {
     width: 75%;
     margin: 0 auto;
     border: 1px;
+    background-color: white;
 }
 
+.maybe-container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    border: 2px solid black;
+    border-radius: 30px;
+    background-color: white;
+}
 
-    .slick-slide { 
-        margin: 0 0px;
-    }
+.slick-slide {
+    margin: 0 0px;
+}
 
-    .slick-slide img { 
-        margin: 0 auto;
-    }
+.slick-slider {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.slick-slide img {
+    margin: 0 auto;
+}
 
 .product-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    margin-top: 60px;
-    margin-right: 10px;
+    display: flex;
+    flex-direction: column; /* Вертикальная направленность Flexbox */
+    justify-content: space-between; /* Распределение пространства между элементами */
+    margin-bottom: 5px;
     width: 150px;
     height: 600px;
+    background-color: white; /* Добавьте отступы внутри карточки, если нужно */
 }
 
 .product-price {
-     /* Устанавливаем желаемый размер шрифта */
     font-weight: bold;
-    color: #b54848; /* Делаем текст жирным */
+    color: #b54848;
 }
 
-
 .link-style {
-    text-decoration: none; /* Убираем подчеркивание */
-    color: inherit; /* Сохраняем цвет текста по умолчанию */
-    background-color: transparent; /* Убираем фон */
+    text-decoration: none;
+    color: inherit;
+    background-color: transparent;
 }
 
 .category-title {
-    font-size: 1.2em; /* Установите желаемый размер шрифта */
-    font-weight: bold; /* Делаем текст жирным, если нужно */
+    font-size: 1.2em;
+    font-weight: bold;
     color: #333;
-    text-decoration: none; /* Установите желаемый цвет текста */
+    text-decoration: none;
 }
 
 .product-sale-percentage {
-    font-size: 18px; /* Устанавливаем желаемый размер шрифта */
+    font-size: 18px;
     font-weight: bold;
 }
 
-
 .product-price.discounted {
     text-decoration: line-through;
-    font-size: 1em; /* Устанавливаем размер шрифта для старой цены */
+    font-size: 1em;
     color: #888;
     margin-bottom: 0;
 }
 
-
 .product-saleprice.counted {
     text-decoration: none;
-    font-size: 18px; /* Устанавливаем желаемый размер шрифта */
+    font-size: 18px;
     font-weight: bold;
-    color: #b54848; /* Красный цвет для новой цены */
-    margin-left: 10px; /* Жирный шрифт для новой цены */
+    color: #b54848;
+    margin-left: 10px;
     margin-top: 0;
 }
-
 
 .product-list {
     display: flex;
@@ -75,7 +93,6 @@
     padding: 0;
     margin: 0;
 }
-
 
 .product-image {
     width: 200px;
@@ -91,23 +108,23 @@ ul {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
-    white-space: normal; /* Разрешаем перенос строк */
+    white-space: normal;
     word-break: break-word;
 }
 
 .product-details {
     font-size: 14px;
-    overflow: hidden; /* Обрезаем текст, если он выходит за пределы блока */
-    text-overflow: ellipsis; /* Добавляем многоточие для обозначения обрезанного текста */
-    white-space: nowrap; /* Запрещаем перенос строк */
+    flex-grow: 1; /* Занимает оставшееся пространство */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
-
 
 .product-actions {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    margin-top: auto;
+    align-items: center; /* Выравнивание кнопок по центру */
+    margin-top: 10px; /* Отступ сверху для кнопок */
 }
 
 .product-actions button {
@@ -123,13 +140,13 @@ ul {
 }
 
 .product-sale-percentage {
-    font-size: 1em; /* Устанавливаем размер шрифта для процента скидки */
-    font-weight: bold; /* Жирный шрифт */
-    color: green; /* Зеленый цвет для процента скидки */
-    margin-top: 5px; /* Отступ сверху */
-    background-color: #f0f0f0; /* Добавляем фон */
-    padding: 5px; /* Добавляем отступы внутри блока */
-    border-radius: 5px; /* Скругляем углы */
+    font-size: 1em;
+    font-weight: bold;
+    color: green;
+    margin-top: 5px;
+    background-color: #f0f0f0;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .product-image {
@@ -151,11 +168,9 @@ ul {
     color: #b54848;
 }
 
-
 .product-image-container {
     position: relative;
 }
-
 
 .product-discount-overlay {
     position: absolute;

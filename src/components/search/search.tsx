@@ -22,6 +22,7 @@ const SearchResults: React.FC = () => {
     const location = useLocation();
     const [searchResults, setSearchResults] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [sortMethod, setSortMethod] = useState<string>('default');
     const navigate = useNavigate();
 
     const searchQuery = new URLSearchParams(location.search).get('query') || '';
@@ -144,17 +145,35 @@ const SearchResults: React.FC = () => {
     };
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <p>Загрузка...</p>;
     }
+
+    const sortProducts = (products: Product[], method: string) => {
+        switch (method) {
+          case 'priceAsc':
+            return [...products].sort((a, b) => (a.salePrice || a.price) - (b.salePrice || b.price));
+          case 'priceDesc':
+            return [...products].sort((a, b) => (b.salePrice || b.price) - (a.salePrice || a.price));
+          case 'titleAsc':
+            return [...products].sort((a, b) => a.title.localeCompare(b.title));
+          case 'titleDesc':
+            return [...products].sort((a, b) => b.title.localeCompare(a.title));
+          default:
+            return products;
+        }
+      };
+      
+      const sortedProducts = sortProducts(searchResults, sortMethod);
 
     return (
         <div>
             <ToastContainer />
-            <h1>Результаты поиска</h1>
+            <h1 style={{color: "white"}}>Результаты поиска</h1>
+      
             <div className="product-container">
                 <ul className="product-list">
-                    {searchResults.map(product => (
-                        <li key={product.id} className="product-card">
+                    {sortedProducts.map(product => (
+                        <li key={product.id} className="product-card" style={{width: "250px"}}>
                         <Link to={`/product/${product.id}`} className='link-style'>
                         <div className="product-image-container">
     <img src={`data:image/jpeg;base64,${product.photo}`} alt={product.title} className="product-image"/>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import "./ProductPage.css"
 
 interface Product {
@@ -43,6 +43,7 @@ const ProductPage: React.FC = () => {
     const { productId } = useParams<{ productId: string }>();
     const [product, setProduct] = useState<Product | null>(null);
     const [sortOrder, setSortOrder] = useState<string>('none');
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -83,6 +84,12 @@ const ProductPage: React.FC = () => {
     };
 
     const handleAddToCart = (productId: number) => {
+        const token = localStorage.getItem("Token");
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
         const handleGet = async () => {
             try {
                 const res = await fetch(`https://rom-shop-0c9c08d95305.herokuapp.com/products/${productId}/bucket`, {
@@ -110,6 +117,12 @@ const ProductPage: React.FC = () => {
     };
     
     const handleBuy = (productId: number) => {
+        const token = localStorage.getItem("Token");
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
       const data = {
           "idProducts": {
               [productId]: 1
@@ -181,7 +194,7 @@ const ProductPage: React.FC = () => {
             <img src={`data:image/jpeg;base64,${product.photo}`} alt={product.title} />
             <div style={{ marginTop: '10px' }}>
                 <button className="product-button" onClick={() => handleAddToCart(product.id)} style={{ backgroundColor: '#007bff', color: '#fff', padding: '10px 20px', borderRadius: '5px', marginRight: '10px' }}>Добавить в корзину</button>
-                <button onClick={() => handleBuy(product.id)} style={{ backgroundColor: '#007bff', color: '#fff', padding: '10px 20px', borderRadius: '5px', marginLeft: '70px'}}>Купить</button>
+                <button className="product-button" onClick={() => handleBuy(product.id)} style={{ backgroundColor: '#007bff', color: '#fff', padding: '10px 20px', borderRadius: '5px', marginLeft: '70px'}}>Купить</button>
             </div>
             <div>
                 <h2>Средняя оценка товара: {calculateAverageRating()} <span style={{ color: '#007bff', display: 'inline-block' }}>★</span></h2>

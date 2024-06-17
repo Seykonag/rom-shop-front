@@ -12,6 +12,7 @@
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap; /* Добавлено для возможности оборачивания элементов */
 }
 
 .logo {
@@ -43,6 +44,7 @@
 
 .search-input {
   margin-right: 5px;
+  width: 750px; /* Установлен фиксированный размер для адаптации */
 }
 
 .search-button {
@@ -77,11 +79,6 @@
 
 .search-input-container {
   position: relative;
-}
-
-.search-input {
-  padding-right: 30px;
-  width: 1000px;
 }
 
 .search-icon {
@@ -182,4 +179,55 @@
 
 .dropdown:hover .dropbtn {
   color: #007bff; /* Цвет текста при наведении */
+}
+
+@media (max-width: 1440px) {
+  .search-input {
+    width: 350px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .search-input {
+    width: 300px;
+  }
+}
+
+/* Адаптивные стили */
+@media (max-width: 1200px) {
+  .search-input {
+    width: 250px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .search-input {
+    width: 200px;
+  }
+}
+
+@media (max-width: 992px) {
+  .search-input {
+    width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-input {
+    width: 150px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-links li {
+    margin-bottom: 10px;
+  }
 }

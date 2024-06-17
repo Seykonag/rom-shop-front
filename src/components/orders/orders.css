@@ -1,10 +1,12 @@
 .orders-container {
+    background-color: white;
     display: flex;
     flex-wrap: wrap;
     border: none;
 }
 
 .order-card {
+    background-color: white;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 20px;

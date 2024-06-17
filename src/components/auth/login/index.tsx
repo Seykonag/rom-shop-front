@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useUser } from '../../usercontext'; // Импортируйте хук useUser
+import { useUser } from '../../usercontext'; 
 import { TextField, Button, Container, Typography, Box, Alert } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate(); // Получите функцию setUsername из контекста
@@ -17,6 +19,8 @@ const LoginPage: React.FC = () => {
   async function handle() {
     const requestData = { username, password };
 
+    
+
     const res = await fetch('https://rom-shop-0c9c08d95305.herokuapp.com/auth/login', {
       method: 'POST',
       body: JSON.stringify(requestData),
@@ -30,12 +34,18 @@ const LoginPage: React.FC = () => {
       console.log(json);
       localStorage.setItem('Token', json.token);
       localStorage.setItem('Username', json.username);
-      setUsername(json.username); 
-      alert('Вы авторизованы'); // Обновляем имя пользователя в контексте
+      setUsername(json.username);
       navigate('/');
     } else {
-      alert('Не верный логин или пароль');
-      navigate('/login');
+      toast.error("Вы ввели неверный логин или пароль", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    });
     }
   }
 
@@ -74,21 +84,26 @@ const LoginPage: React.FC = () => {
   };
 
   useEffect(() => {
+    if (localStorage.getItem('Token') !== null) {
+      navigate("/")
+    }
     document.title = 'Войти';
     setFormValid(!usernameError && !passwordError);
   }, [usernameError, passwordError]);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" style={{backgroundColor:"white", borderRadius: "30px", marginBottom: "30px"}}>
+      <ToastContainer />
       <Box
         sx={{
           marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          height: '440px'
         }}
       >
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h4">
           Войти
         </Typography>
         <Box component="form" onSubmit={(e) => { e.preventDefault(); handle(); }} sx={{ mt: 1 }}>
@@ -104,7 +119,6 @@ const LoginPage: React.FC = () => {
             label="Ваш логин"
             name="username"
             autoComplete="username"
-            autoFocus
             value={username}
             onChange={usernameHandler}
             onBlur={blurHandler}

@@ -112,7 +112,7 @@ interface Product {
         console.log(JSON.stringify(data));
   
         if (response.ok) {
-          window.location.href = "http://localhost:3000/admin/products";
+          window.location.href = "http://195.133.198.25:3000/admin/products";
         }
   
         return { data };
@@ -134,7 +134,7 @@ interface Product {
           });
   
           if (response.ok) {
-            window.location.href = "http://localhost:3000/admin/products";
+            window.location.href = "http://195.133.198.25:3000/admin/products";
           }
   
           return { data };

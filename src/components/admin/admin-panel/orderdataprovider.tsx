@@ -78,7 +78,7 @@ interface Order {
         console.log(JSON.stringify(data));
   
         if (response.ok) {
-          window.location.href = "http://localhost:3000/admin/orders";
+          window.location.href = "http://195.133.198.25:3000/admin/orders";
         }
   
         return { data };

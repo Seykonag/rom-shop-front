@@ -281,10 +281,10 @@ const BucketPage: React.FC = () => {
             <ToastContainer />
             {cartData &&
                 <div className="bucket-content">
-                    <h1>Корзина</h1>
+                    <h1 style={{color:"white"}}>Корзина</h1>
                     {cartData.bucketDetails.length > 0 && (
                         <>
-                            <h2>Общая сумма: {cartData.sum.toLocaleString()} ₸</h2>
+                            <h2 style={{color:"white"}}>Общая сумма: {cartData.sum.toLocaleString()} ₸</h2>
                         </>
                     )}
                     

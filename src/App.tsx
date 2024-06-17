@@ -16,6 +16,9 @@ import AdminPanel from './components/admin/admin-panel';
 import SearchResults from './components/search/search';
 import Footer from './components/Footer/footer';
 import ProductEdit from './components/admin/admin-panel/productedit';
+import AboutPage from './components/about';
+import PrivacyPage from './components/privacy';
+import TermPage from './components/terms';
 
 function App() {
   const [showHeaderFooter, setShowHeaderFooter] = useState<boolean>(true);
@@ -25,6 +28,9 @@ function App() {
         {showHeaderFooter && <Header />}
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />}/>
+          <Route path="/privacy" element={<PrivacyPage />}/>
+          <Route path="/terms" element={<TermPage />}/>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/registration" element={<RegistrationPage />} />
           <Route path="/logout" element={<LogoutPage />} />
@@ -47,14 +53,12 @@ function App() {
           <Route path="/sales/create" element = {<Navigate to="/admin/sales/create" />} />
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
-      {/* Рендерим футер только если showHeaderFooter равен true */}
       {showHeaderFooter && <Footer />}
     </div>
   );
 }
 
 const AdminPanelRoute = ({ setShowHeaderFooter }: { setShowHeaderFooter: React.Dispatch<React.SetStateAction<boolean>> }) => {
-  // Устанавливаем false для скрытия хедера и футера при открытии административной панели
   setShowHeaderFooter(false);
   return <AdminPanel />;
 };

@@ -158,7 +158,7 @@ const HomePage: React.FC = () => {
     };
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <p>Загрузка...</p>;
     }
 
     const groupedProducts = categories.map(category => ({
@@ -167,7 +167,7 @@ const HomePage: React.FC = () => {
     }));
 
     return (
-        <div>
+        <div className='maybe-container'>
         <ToastContainer />
         {groupedProducts.map(category => (
             <div key={category.id} className="product-container">
