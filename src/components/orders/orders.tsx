@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./orders.css";
 
 interface OrderDetail {
@@ -63,7 +65,7 @@ const OrdersPage: React.FC = () => {
     const [showComments, setShowComments] = useState<boolean>(false);
     const [showBonus, setShowBonus] = useState<boolean>(false);
     const [bonusId, setBonusId] = useState<number | null>(null);
-    const [useBonus, setUseBonus] = useState<boolean>(false);
+    const [useBonus, setUseBonus] = useState<boolean>(false); // State for checkbox
     const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
     const [rating, setRating] = useState<number | null>(null);
     const [commentText, setCommentText] = useState<string>('');
@@ -147,29 +149,48 @@ const OrdersPage: React.FC = () => {
     };
     
     const handleBonusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setUseBonus(true);
+        setUseBonus(e.target.checked); // Update state based on checkbox value
     };
 
-    const handlePay = async (orderId: number | null ) => {
+    const handlePay = async (orderId: number | null) => {
         if (orderId === null) return;
 
         const data = {
-            idOrder: orderId
+            idOrder: orderId,
+            bonus: useBonus // Include useBonus state in the request data
         };
 
-        console.log(data)
+        console.log(JSON.stringify(data))
 
         try {
             const response = await fetch('https://rom-shop-0c9c08d95305.herokuapp.com/pay', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('Token')}`
                 }
             });
             if (response.ok) {
-                const url = await response.text(); // Assuming the response is plain text
-                window.location.href = url;
+                const url = await response.text();
+                if (url === "Заказ полностью оплачен бонусами") {
+                    toast.success("Заказ полностью оплачен бонусами", {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                } 
+                else {
+                    window.location.href = url;
+                }
             } else {
                 console.error('Failed to pay order:', response.status);
             }
@@ -271,6 +292,7 @@ const OrdersPage: React.FC = () => {
 
     return (
         <div>
+            <ToastContainer />
             <h1 style={{color:"white"}}>Список заказов</h1>
             <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }} className='order-card'>
                 {orders.map(order => (
@@ -324,7 +346,7 @@ const OrdersPage: React.FC = () => {
                     <div className="modal-content">
                         <h2>Хотите использовать бонусы для заказа #{bonusId}?</h2>
                         {bonus !== 0 && (
-                            <input type="checkbox" />
+                            <input type="checkbox" checked={useBonus} onChange={handleBonusChange} />
                         )}
                         <h3>У вас {bonus !== 0 ? bonus.toLocaleString() : 'нет' } бонусов</h3>
                         <h4>При оплате бонусами они спишутся, если бонусов достаточно то покупка обойдется бесплатно</h4>
