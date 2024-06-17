@@ -200,7 +200,7 @@ const HomePage: React.FC = () => {
                                         </div>
                                     )}
                                 </div>
-                                <div className="product-details">
+                                <div className="product-details" style={{height: "300px"}}>
                                     <h3 className="product-title" style={{ color: '#0096f0' }}>
                                         {product.title}
                                     </h3>
