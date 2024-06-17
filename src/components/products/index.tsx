@@ -184,14 +184,14 @@ const ProductPage: React.FC = () => {
     });
 
     return (
-        <div className='container-neobyc'>
+        <div className='container-neobyc' style={{backgroundColor: "white", borderRadius: "50px"}}>
             <h1>{product.title}</h1>
             <p style={{ fontSize: '18px', fontWeight: 'bold' }}>Цена: {product.price.toLocaleString()} ₸</p>
             {product.salePrice && <p style={{ fontSize: '18px', fontWeight: 'bold' }}>Скидочная цена: Т{product.salePrice}</p>}
             <p style={{ fontSize: '18px', fontWeight: 'bold' }}>Модель: {product.model}</p>
             <p style={{ fontSize: '18px', fontWeight: 'bold' }}>Разработчик: {product.developer}</p>
             <p style={{ fontSize: '18px', fontWeight: 'bold' }}>{product.stock ? 'В наличии' : 'Нет в наличии'}</p>
-            <img src={`data:image/jpeg;base64,${product.photo}`} alt={product.title} />
+            <img src={`data:image/jpeg;base64,${product.photo}`} alt={product.title} style={{width: "300px", height: "300px"}}/>
             <div style={{ marginTop: '10px' }}>
                 <button className="product-button" onClick={() => handleAddToCart(product.id)} style={{ backgroundColor: '#007bff', color: '#fff', padding: '10px 20px', borderRadius: '5px', marginRight: '10px' }}>Добавить в корзину</button>
                 <button className="product-button" onClick={() => handleBuy(product.id)} style={{ backgroundColor: '#007bff', color: '#fff', padding: '10px 20px', borderRadius: '5px', marginLeft: '70px'}}>Купить</button>
