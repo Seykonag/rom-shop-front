@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./ProductPage.css"
 
 interface Product {
@@ -101,7 +103,15 @@ const ProductPage: React.FC = () => {
                 });
     
                 if (res.ok) {
-                    alert("Вы оформили товар, проверьте вашу корзину")
+                    toast.success("Вы оформили товар, проверьте вашу корзину", {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
                 } else {
                     console.error('Failed to fetch cart data:', res.status);
                 }
@@ -143,7 +153,15 @@ const ProductPage: React.FC = () => {
               });
     
               if (res.ok) {
-                  alert("Вы оформили заказ, проверьте ваши заказы")
+                toast.success("Вы оформили заказ, проверьте ваши заказы. Ожидайте одобрения заказа чтобы оплатить", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
               } else {
                   console.error('Failed to fetch cart data:', res.status);
               }
@@ -185,6 +203,7 @@ const ProductPage: React.FC = () => {
 
     return (
         <div className='container-neobyc' style={{backgroundColor: "white", borderRadius: "50px"}}>
+            <ToastContainer />
             <h1>{product.title}</h1>
             <p style={{ fontSize: '18px', fontWeight: 'bold' }}>Цена: {product.price.toLocaleString()} ₸</p>
             {product.salePrice && <p style={{ fontSize: '18px', fontWeight: 'bold' }}>Скидочная цена: Т{product.salePrice}</p>}

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useUser } from '../usercontext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './profile.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -280,13 +282,23 @@ const ProfilePage = () => {
                 });
 
                 if (res.ok) {
-                    alert('Данные обновлены')
+                  toast.success("Данные обновлены", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
                 } else {
                     console.log(JSON.stringify(request_data))
                     alert('Данные были введены неверно')
                 }    
 
-                window.location.reload();
+                setTimeout(() => {
+                  window.location.reload()
+              }, 3000);
         }
 
     
@@ -317,6 +329,7 @@ const ProfilePage = () => {
 
     return (
         <div className="square">
+          <ToastContainer />
             <p className="addtextlog">Ваш логин: {username}</p>
             <label className="label-name" htmlFor="name">Имя:</label>
             <input className="input-name" type="text" id="name" name="name" placeholder={firstName} value={newFirstName} onChange={(e) => setNewFirstName(e.target.value)} />
